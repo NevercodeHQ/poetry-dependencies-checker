@@ -11,11 +11,11 @@ The checks are carried out using [pytest](https://docs.pytest.org/) testing fram
 MacOS / Linux / Bash on Windows
 
 ```bash
-TBD
+curl -sSL https://raw.githubusercontent.com/NevercodeHQ/poetry-dependencies-checker/main/check-dependencies.py | python -
 ```
 
 Windows PowerShell
 
 ```bash
-TBD
+(Invoke-WebRequest -Uri https://raw.githubusercontent.com/NevercodeHQ/poetry-dependencies-checker/main/check-dependencies.py -UseBasicParsing).Content | python -
 ```
