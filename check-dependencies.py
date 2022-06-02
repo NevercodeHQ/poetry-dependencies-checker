@@ -13,7 +13,7 @@ from typing import Optional
 
 
 class ProgramArguments(NamedTuple):
-    junit_xml: str
+    junit_xml: Optional[str]
     no_pytest_install: str
     pytest_executable: Optional[pathlib.Path]
 
@@ -31,13 +31,15 @@ def _custom_pytest_executable(custom_pytest_executable: str) -> pathlib.Path:
 
 def _setup_arguments() -> ProgramArguments:
     parser = argparse.ArgumentParser(
-        description="Check if Poetry based Python project dependencies declared in pyproject.toml are up to date",
+        description=(
+            "Check if Poetry based Python project dependencies "
+            "declared in pyproject.toml are up to date"
+        ),
     )
     parser.add_argument(
         "--junit-xml",
         dest="junit_xml",
-        default="outdated_dependencies_report.xml",
-        help="Save check results as JUnit XML to specified path",
+        help="save check results as JUnit XML to specified path",
     )
     parser.add_argument(
         "--no-pytest-install",
@@ -49,10 +51,14 @@ def _setup_arguments() -> ProgramArguments:
         "--pytest",
         dest="pytest_executable",
         type=_custom_pytest_executable,
-        help='specify custom pytest executable (default: "python -m pytest")',
+        help="specify custom pytest executable",
     )
-    parsed_args = parser.parse_args()
-    return ProgramArguments(**vars(parsed_args))
+    args = parser.parse_args()
+    return ProgramArguments(
+        junit_xml=args.junit_xml,
+        no_pytest_install=args.no_pytest_install,
+        pytest_executable=args.pytest_executable,
+    )
 
 
 def _check_python_version():
