@@ -4,7 +4,7 @@ Check that the [Poetry]([https://github.com/python-poetry/poetry](https://python
 
 The checks are carried out using [pytest](https://docs.pytest.org/) testing framework to generate reports that are easily usabe in CI environments.
 
-> **TODO** Record example usage with [asciinema](https://github.com/asciinema/asciinema)
+[![asciicast](https://asciinema.org/a/71YwN1YMD4smctaLYbxQdBPaq.svg)](https://asciinema.org/a/71YwN1YMD4smctaLYbxQdBPaq)
 
 ## Usage
 
