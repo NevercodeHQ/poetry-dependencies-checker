@@ -14,7 +14,6 @@ from typing import Optional
 
 class ProgramArguments(NamedTuple):
     junit_xml: str
-    no_junit_xml: bool
     no_pytest_install: str
     pytest_executable: Optional[pathlib.Path]
 
@@ -37,14 +36,8 @@ def _setup_arguments() -> ProgramArguments:
     parser.add_argument(
         "--junit-xml",
         dest="junit_xml",
-        default="poetry_dependencies_report.xml",
-        help='generated JUnit XML test results path (default: "poetry_dependencies_report.xml")',
-    )
-    parser.add_argument(
-        "--no-junit-xml",
-        dest="no_junit_xml",
-        action="store_true",
-        help="skip saving test result to JUnit XML file",
+        default="outdated_dependencies_report.xml",
+        help="Save check results as JUnit XML to specified path",
     )
     parser.add_argument(
         "--no-pytest-install",
@@ -53,7 +46,7 @@ def _setup_arguments() -> ProgramArguments:
         help="prohibit installing pytest if it is not present on the system",
     )
     parser.add_argument(
-        "--pytest-executable",
+        "--pytest",
         dest="pytest_executable",
         type=_custom_pytest_executable,
         help='specify custom pytest executable (default: "python -m pytest")',
@@ -145,11 +138,7 @@ def main():
             return _run_tests(
                 program_arguments.pytest_executable,
                 tests_path,
-                junit_xml=(
-                    None
-                    if program_arguments.no_junit_xml
-                    else program_arguments.junit_xml
-                ),
+                junit_xml=program_arguments.junit_xml,
             )
     except IOError as ioe:
         print(f"Error: {ioe}")
