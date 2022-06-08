@@ -100,8 +100,9 @@ def _ensure_pytest(
 
 
 @contextlib.contextmanager
-def _test_script() -> pathlib.Path:
-    tests_script_url = "https://raw.githubusercontent.com/NevercodeHQ/poetry-dependencies-checker/main/test-poetry-dependencies.py"
+def _test_script(ref="main") -> pathlib.Path:
+    repo_slug = "NevercodeHQ/poetry-dependencies-checker"
+    tests_script_url = f"https://raw.githubusercontent.com/{repo_slug}/{ref}/test_poetry_dependencies.py"
     with urllib.request.urlopen(tests_script_url) as response:
         tests_script: bytes = response.read()
 

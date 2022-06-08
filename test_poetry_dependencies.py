@@ -55,11 +55,13 @@ class Dependency(NamedTuple):
         ].items():
             if name.lower() == "python":
                 continue
-            version_constraint = (
-                version_info
-                if isinstance(version_info, str)
-                else version_info["version"]
-            )
+            if isinstance(version_info, str):
+                version_constraint = version_info
+            elif "version" in version_info:
+                version_constraint = version_info["version"]
+            else:
+                warnings.warn(f"Failed to obtain version constraint for {name}")
+                continue
             yield Dependency(name, version_constraint)
 
     def get_latest_version(self) -> Version:
