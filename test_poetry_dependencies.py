@@ -32,8 +32,10 @@ def locked_versions() -> Dict[str, Version]:
     with open("poetry.lock") as f:
         lock_info = tomllib.loads(f.read())
 
-    locked_packages = lock_info["package"]
-    return {package["name"]: Version(package["version"]) for package in locked_packages}
+    return {
+        package["name"].lower(): Version(package["version"])
+        for package in lock_info["package"]
+    }
 
 
 class Dependency(NamedTuple):
